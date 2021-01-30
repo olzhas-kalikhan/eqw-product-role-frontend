@@ -7,14 +7,17 @@ export const DataTable = () => {
     const [tableData, setTableData] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
     const [location, setLocation] = useState({ lat: 10, lon: 10 })
-    useEffect(async () => {
-        try {
-            let data = await DataService.getPOI()
-            setTableData(data)
+    useEffect(() => {
+        async function fetchData(){
+            try {
+                let data = await DataService.getPOI()
+                setTableData(data)
+            }
+            catch (err) {
+                console.error(err)
+            }
         }
-        catch (err) {
-            console.error(err)
-        }
+        fetchData()
     }, [])
     const handleSearchFieldChange = (e) => {
         setSearchTerm(e.target.value)
@@ -49,7 +52,7 @@ export const DataTable = () => {
                             // .filter(record => record.name.includes(searchTerm))
                             .map(({ poi_id, name, lat, lon }) =>
                                 <tr
-                                    style={name.toLowerCase().includes(searchTerm.toLowerCase()) && searchTerm != '' ? { background: 'yellow' } : {}}
+                                    style={name.toLowerCase().includes(searchTerm.toLowerCase()) && searchTerm !== '' ? { background: 'yellow' } : {}}
                                     onClick={handleOnRowClick}
                                     key={poi_id}
                                 >

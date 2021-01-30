@@ -11,15 +11,16 @@ export const Composedchart = ({ chartData, xAxisDataKey, dataKeys }) => {
         <div className='chart-wrapper'>
             <ResponsiveContainer height='80%' width='100%'>
                 <ComposedChart data={chartData} margin={{ bottom: 20 }} barGap={2}>
-                    <XAxis dataKey={xAxisDataKey} scale="band"  />
+                    <XAxis dataKey={xAxisDataKey} scale="band" />
                     <YAxis type="number" domain={[0, datamax => Math.round(datamax * 1.1)]} tickCount={20} />
                     <Tooltip />
                     <Legend margin={{ top: 20 }} />
                     <CartesianGrid stroke="#f5f5f5" />
-                    
-                    {dataKeys.map(({ value, Component, ...rest }) =>
+
+                    {dataKeys.map(({ value, Component, ...rest }, idx) =>
                         checkedKeys[value] &&
                         <Component
+                            key={idx + value}
                             dataKey={value}
                             {...rest}
                         />

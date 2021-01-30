@@ -13,28 +13,35 @@ export const Events = () => {
     const handleSelectDate = (event) => {
         selectDate(event)
     }
-    useEffect(async () => {
-        let eventsDaily = await DataService.getEvents();
-        seteventsDataDaily(
-            eventsDaily.map((record) => ({
-                ...record,
-                date: Utilities.getDateFromString(record.date),
-            }))
-        )
-        let eventsHourly = await DataService.getEvents(true);
-        seteventsDataHourly(
-            eventsHourly.map((record) => ({
-                ...record,
-                date: Utilities.getDateFromString(record.date),
-            }))
-        )
-
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                let eventsDaily = await DataService.getEvents();
+                seteventsDataDaily(
+                    eventsDaily.map((record) => ({
+                        ...record,
+                        date: Utilities.getDateFromString(record.date),
+                    }))
+                )
+                let eventsHourly = await DataService.getEvents(true);
+                seteventsDataHourly(
+                    eventsHourly.map((record) => ({
+                        ...record,
+                        date: Utilities.getDateFromString(record.date),
+                    }))
+                )
+            }
+            catch (err) {
+                console.error(err)
+            }
+        }
+        fetchData()
     }, [])
     useEffect(() => {
         setEventsDataHourlyByDate(
             eventsDataHourly.filter(record => record.date === date)
         )
-    }, [date])
+    }, [date, eventsDataHourly])
     useEffect(() => {
         if (eventsDataHourly.length > 0)
             selectDate(eventsDataHourly[0].date)
@@ -43,7 +50,7 @@ export const Events = () => {
         <div className='page-wrapper'>
             <Barchart chartData={eventsDataDaily} xAxisDataKey='date' barDataKey='events' xLabel='Dates' />
             <Barchart chartData={eventsDataHourlyByDate} xAxisDataKey='hour' barDataKey='events' xLabel='Hours' />
-            <DropdownButton  variant="outline-info" id="dropdown-basic-button" title={date} onSelect={handleSelectDate}>
+            <DropdownButton variant="outline-info" id="dropdown-basic-button" title={date ? date : ' '} onSelect={handleSelectDate}>
                 {eventsDataDaily.map((record, idx) =>
                     <Dropdown.Item key={idx + record.date} eventKey={record.date} active={record.date === date}>{record.date}</Dropdown.Item>
                 )}
