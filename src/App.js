@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Sidenav } from './components/Sidenav'
+import { Events } from './pages/Events'
+import { Stats } from './pages/Stats'
+import { DataTable } from './pages/DataTable';
+
+const styles = {
+  display: 'flex',
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={styles}>
+
+      <Router >
+        <Sidenav />
+        <Switch>
+          <Route path="/events">
+            <Events />
+          </Route>
+          <Route path="/stats">
+            <Stats />
+          </Route>
+          <Route path="/datatable">
+            <DataTable />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
