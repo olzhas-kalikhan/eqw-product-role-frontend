@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap'
-import { CartesianGrid, Bar, XAxis, YAxis, Legend, Tooltip, Line, ComposedChart, ResponsiveContainer } from 'recharts';
+import { CartesianGrid, XAxis, YAxis, Legend, Tooltip, ComposedChart, ResponsiveContainer } from 'recharts';
 
 export const Composedchart = ({ chartData, xAxisDataKey, dataKeys }) => {
     const [checkedKeys, setCheckedKeys] = useState({})

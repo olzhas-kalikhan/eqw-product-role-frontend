@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, InputGroup, FormControl, Button, ButtonGroup, ToggleButton } from 'react-bootstrap'
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import { Table, InputGroup, FormControl } from 'react-bootstrap'
 import { Map } from '../components/Map'
 import DataService from '../service/DataFetch'
 
